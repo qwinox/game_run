@@ -91,7 +91,6 @@ class Game():
                 self.level.player.camera_speed = 0
                 self.level.player.speed = 0
                 self.level.player.win = 1
-                #print("win")
 
             if self.level.player.stats['health'] <= 0:
                 self.level.player.camera_speed = 0
@@ -104,18 +103,11 @@ class Game():
                 sql.execute(f"INSERT INTO saves VALUES (?, ?, ?)", (self.level.player.curent_name, self.level.player.curent_point, self.level.player.curent_date))
                 db.commit()
 
-                for value in sql.execute("""SELECT * FROM saves"""):
-                    print(value)
-
-                print()
-
                 for value in sql.execute("""SELECT *
                 FROM saves
                 ORDER BY point DESC
                 LIMIT 5"""):
-                    print(value)
                     self.level.player.top_players.append(value)
-
 
             self.screen.fill((208, 199, 130))
             self.level.run()

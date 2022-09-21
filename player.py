@@ -227,6 +227,6 @@ class Player(pygame.sprite.Sprite):
                 self.top_players[4][1])
             debug(s, 620, 380)
 
-            #print(self.top_players)
+            ##print(self.top_players)
 
 
