@@ -3,8 +3,9 @@ from settings import *
 from tile import Tile
 from player import Player
 from heal import Heal
-from debug import debug
 import random
+from debug import debug
+
 
 class Level:
     def __init__(self):
@@ -16,7 +17,25 @@ class Level:
         self.create_map()
 
     def create_map(self):
-        for row_index, row in enumerate(WORLD_MAP):
+        # Создаём пустой список для случайной карты
+        Random_World_Map = []
+
+        # Вписываем в список конец карты с финишем
+        for j in range(10):
+            Random_World_Map.append(WORLD_MAP[j])
+
+        # Заполнение списка случайными блоками
+        for i in range(len(WORLD_MAP) // 10 - 2):
+            i = random.randint(1, len(WORLD_MAP) // 10 - 2)
+            for j in range(10):
+                Random_World_Map.append(WORLD_MAP[j + i * 10])
+
+        # Вписываем в список конец начало карты с персонажем
+        for j in range(10):
+            Random_World_Map.append(WORLD_MAP[j + (len(WORLD_MAP) // 10 - 1) * 10])
+
+        # Отображение сгененрированной случайной карты на экране
+        for row_index, row in enumerate(Random_World_Map):
             for col_index, col in enumerate(row):
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
@@ -24,6 +43,7 @@ class Level:
                     Tile((x, y), [self.visible_sprites, self.obstacles_sprites])
                 elif col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites)
+                    print("0")
                 elif col == 'a':
                     Heal((x, y), [self.visible_sprites])
 
